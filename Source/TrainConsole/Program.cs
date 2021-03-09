@@ -14,9 +14,17 @@ namespace TrainConsole
             // Step 2:
             // Make the trains run in treads
             // Test
-            //  Andreas testar
-            //  Jens testar
+            //Andreas testar
 
+            Train train1 = new Train("Name of train");
+            Station station1 = new Station("Gothenburg");
+            Station station2 = new Station("Stockholm");
+
+            ITravelPlan travelPlan = new TrainPlaner(train1, station1)
+                    .HeadTowards(station2)
+                    .StartTrainAt("10:23")
+                    .StopTrainAt(station2, "14:53")
+                .GeneratePlan();
         }
     }
 }
