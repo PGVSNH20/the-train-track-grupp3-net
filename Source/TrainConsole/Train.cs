@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TrainConsole
 {
-    class Train
+    public class Train
     {
-    }
+        public Train (string input)
+        {
+            
+        }
+    }   
 }
