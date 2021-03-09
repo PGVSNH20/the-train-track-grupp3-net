@@ -18,8 +18,8 @@ namespace TrainConsole
             //Andreas testar
 
             Train train1 = new Train("Name of train");
-            Station station1 = new Station("Gothenburg");
-            Station station2 = new Station("Stockholm");
+            Trainstation station1 = new Trainstation("Gothenburg");
+            Trainstation station2 = new Trainstation("Stockholm");
 
             ITravelPlan travelPlan = new TrainPlaner(train1, station1)
                     .HeadTowards(station2)
