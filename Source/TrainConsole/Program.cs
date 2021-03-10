@@ -6,6 +6,7 @@ namespace TrainConsole
 {
     class Program
     {
+        static readonly string _passangers = @"..\..\..\..\..\Data\passengers.txt";
         static void Main(string[] args)
         {
             Console.WriteLine("Train track!");
@@ -27,9 +28,8 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
-            string url = @"..\..\..\..\..\Data\passengers.txt";
             FileReader p = new FileReader();
-            p.StreamReader(url);
+            p.StreamReader(_passangers);
         }
     }
 }
