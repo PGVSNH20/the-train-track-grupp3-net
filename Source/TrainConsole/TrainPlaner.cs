@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainEngine;
+using TrainEngine.Models;
 
 namespace TrainConsole
 {
@@ -15,7 +16,7 @@ namespace TrainConsole
 
         public object Trainstation { get; set; }
 
-        public TrainPlaner(Train train, Trainstation station)
+        public TrainPlaner(Train train, Station station)
         {
             Train = train;
             Trainstation = station;

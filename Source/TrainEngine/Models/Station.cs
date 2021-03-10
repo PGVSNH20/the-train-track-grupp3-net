@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TrainEngine.Models
 {
-    class Station
+    public class Station
     {
         // Id|StationName|EndStatio
         public int Id { get; set; }
