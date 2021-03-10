@@ -30,6 +30,16 @@ namespace TrainConsole
             //    .GeneratePlan();
 
 
+            Train goldenArrow = new Train() { TrainId = 2, TrainName = "Golden Arrow", MaxSpeed = 120, IsOperated = true };
+
+            Station mountJuanceo = new Station() { Id = 2, StationName = "Mount Juanceo", EndStation = false };
+            Station grandRetro = new Station() { Id = 3, StationName = "Grand Retro", EndStation = true };
+
+            //2|Mount Juanceo|false
+            //3 | Grand Retro | true
+
+            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, mountJuanceo).StopTrainAt(grandRetro, "14:53").GeneratePlan();
+
 
             //FileReader p = new FileReader();
             //var result = p.StreamReader(trainUrl);
