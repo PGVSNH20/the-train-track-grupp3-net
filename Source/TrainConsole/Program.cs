@@ -1,5 +1,4 @@
 ﻿using System;
-using TrainEngine;
 using TrainEngine.Reader;
 
 namespace TrainConsole
@@ -30,6 +29,8 @@ namespace TrainConsole
             //    .GeneratePlan();
             FileReader p = new FileReader();
             p.StreamReader(_passangers);
+
+
         }
     }
 }
