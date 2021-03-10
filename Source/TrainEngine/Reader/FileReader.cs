@@ -8,8 +8,9 @@ namespace TrainEngine.Reader
 {
     public class FileReader
     {
-        public void StreamReader(string url)
+        public List<string> StreamReader(string url)
         {
+            List<string> list = new List<string>();
             try
             {
                 // Startar stream, letar rätt på fil
@@ -20,14 +21,17 @@ namespace TrainEngine.Reader
                     // Läser filen & skriver ut
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        Console.WriteLine(line);
+                        list.Add(line);
+                        //Console.WriteLine(line);
                     }
                 }
+                return list;
             }
             catch (Exception e)
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
+                return list;
             }
         }
     }

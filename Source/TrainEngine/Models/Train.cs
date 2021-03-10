@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainEngine.Reader;
 
 namespace TrainConsole
 {
@@ -15,6 +16,10 @@ namespace TrainConsole
         public int MaxSpeed { get; set; }
 
         public bool IsOperated { get; set; }
+        public Train()
+        {
+
+        }
         public Train(int trainId, string trainName, int maxSpeed, bool isOperated)
         {
             TrainId = trainId;
@@ -22,9 +27,6 @@ namespace TrainConsole
             MaxSpeed = maxSpeed;
             IsOperated = isOperated;
         }
-
-    } 
-}   
 
         public List<Train> PopulateList(string inputURL)
         {
@@ -62,4 +64,4 @@ namespace TrainConsole
         }
     }
 }
->>>>>>> parent of 376c822 (Refact)
+

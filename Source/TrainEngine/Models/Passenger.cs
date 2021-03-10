@@ -1,17 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using TrainEngine;
+using TrainEngine.Models;
+using TrainEngine.Reader;
 
-namespace TrainEngine.Models
+namespace TrainConsole
 {
-    class Passenger
+    class Program
     {
-        public int Id { get; set; }
-        public int Name { get; set; }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Train track!");
+            // Step 1:
+            // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
+            // Parse the trains (Data/trains.txt)
+
+            // Step 2:
+            // Make the trains run in treads
+            // Test
+            //Andreas testar
+
+            //Train train1 = new Train("Name of train");
+            //Trainstation station1 = new Trainstation("Gothenburg");
+            //Trainstation station2 = new Trainstation("Stockholm");
+
+            //ITravelPlan travelPlan = new TrainPlaner(train1, station1)
+            //        .HeadTowards(station2)
+            //        .StartTrainAt("10:23")
+            //        .StopTrainAt(station2, "14:53")
+            //    .GeneratePlan();
 
 
 
-        // GetPassengerData
-        // RandomizePassengerList
+            //FileReader p = new FileReader();
+            //var result = p.StreamReader(trainUrl);
+
+            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
+            var train = new Train();
+            var trainResult = train.PopulateList(trainUrl);
+
+            foreach (var trainTest in trainResult)
+            {
+                Console.WriteLine(trainTest.TrainName);
+            }
+
+            var passengerUrl = @"..\..\..\..\..\Data\passengers.txt";
+            var passenger = new Passenger();
+            var passengerResult = passenger.PopulateList(passengerUrl);
+
+            foreach (var passengerTest in passengerResult)
+            {
+                Console.WriteLine(passengerTest.Name);
+            }
+
+            //FileReader p = new FileReader();
+            //p.StreamReader();
+            //Station myInstance = new Station();
+            //myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
+        }
     }
 }

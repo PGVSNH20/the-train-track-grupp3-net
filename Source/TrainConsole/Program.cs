@@ -1,11 +1,12 @@
 ﻿using System;
+using TrainEngine;
+using TrainEngine.Models;
 using TrainEngine.Reader;
 
 namespace TrainConsole
 {
     class Program
     {
-        static readonly string _passangers = @"..\..\..\..\..\Data\passengers.txt";
         static void Main(string[] args)
         {
             Console.WriteLine("Train track!");
@@ -27,26 +28,34 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
-            FileReader p = new FileReader();
-            p.StreamReader(_passangers);
 
-<<<<<<< HEAD
-=======
-            //testar att läsa in från tågfilen
+
+
+            //FileReader p = new FileReader();
+            //var result = p.StreamReader(trainUrl);
+
             var trainUrl = @"..\..\..\..\..\Data\trains.txt";
             var train = new Train();
-            var result = train.PopulateList(trainUrl);
+            var trainResult = train.PopulateList(trainUrl);
 
-            foreach (var trainTest in result)
+            foreach (var trainTest in trainResult)
             {
                 Console.WriteLine(trainTest.TrainName);
             }
 
+            var passengerUrl = @"..\..\..\..\..\Data\passengers.txt";
+            var passenger = new Passenger();
+            var passengerResult = passenger.PopulateList(passengerUrl);
+
+            foreach (var passengerTest in passengerResult)
+            {
+                Console.WriteLine(passengerTest.Name);
+            }
+
             //FileReader p = new FileReader();
             //p.StreamReader();
-            var myInstance = new Station();
-            myInstance.PopulateList();
-
+            //Station myInstance = new Station();
+            //myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
         }
     }
 }
