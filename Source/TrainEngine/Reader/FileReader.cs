@@ -8,12 +8,12 @@ namespace TrainEngine.Reader
 {
     public class FileReader
     {
-        public void StreamReader()
+        public void StreamReader(string url)
         {
             try
             {
                 // Startar stream, letar rätt på fil
-                using (StreamReader streamReader = new StreamReader(@"C:\Users\magnu\OneDrive\Skrivbord\.NetUtveckling\Dataåtkomster i .NET\Gruppuppgift\TheTrainTrack\Source\TrainEngine\Reader\TxtFiles\passengers.txt"))
+                using (StreamReader streamReader = new StreamReader(url))
                 {
                     string line;
 
