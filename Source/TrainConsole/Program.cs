@@ -1,5 +1,6 @@
 ﻿using System;
 using TrainEngine;
+using TrainEngine.Reader;
 
 namespace TrainConsole
 {
@@ -17,15 +18,18 @@ namespace TrainConsole
             // Test
             //Andreas testar
 
-            Train train1 = new Train("Name of train");
-            Trainstation station1 = new Trainstation("Gothenburg");
-            Trainstation station2 = new Trainstation("Stockholm");
+            //Train train1 = new Train("Name of train");
+            //Trainstation station1 = new Trainstation("Gothenburg");
+            //Trainstation station2 = new Trainstation("Stockholm");
 
-            ITravelPlan travelPlan = new TrainPlaner(train1, station1)
-                    .HeadTowards(station2)
-                    .StartTrainAt("10:23")
-                    .StopTrainAt(station2, "14:53")
-                .GeneratePlan();
+            //ITravelPlan travelPlan = new TrainPlaner(train1, station1)
+            //        .HeadTowards(station2)
+            //        .StartTrainAt("10:23")
+            //        .StopTrainAt(station2, "14:53")
+            //    .GeneratePlan();
+
+            FileReader p = new FileReader();
+            p.StreamReader();
         }
     }
 }
