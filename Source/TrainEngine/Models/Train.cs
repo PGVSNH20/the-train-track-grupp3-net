@@ -28,10 +28,11 @@ namespace TrainConsole
             IsOperated = isOperated;
         }
 
-        public List<Train> PopulateList(string inputURL)
+        public List<Train> PopulateList()
         {
+            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
             FileReader p = new FileReader();
-            List<string> result = p.StreamReader(inputURL);
+            List<string> result = p.StreamReader(trainUrl);
 
             List<Train> trainList = new List<Train>();
 
