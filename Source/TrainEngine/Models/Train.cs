@@ -26,8 +26,6 @@ namespace TrainConsole
     } 
 }   
 
-<<<<<<< HEAD
-=======
         public List<Train> PopulateList(string inputURL)
         {
             FileReader p = new FileReader();

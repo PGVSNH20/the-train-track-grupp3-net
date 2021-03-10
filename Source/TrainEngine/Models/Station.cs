@@ -15,19 +15,11 @@ namespace TrainEngine.Models
 
 =======
         static readonly string _stations = @"..\..\..\..\..\Data\stations.txt";
->>>>>>> parent of 376c822 (Refact)
 
         public int Id { get; set; }
         public string StationName { get; set; }
         public bool EndStation { get; set; }
 
-<<<<<<< HEAD
-        // Read a row from txt-file and split by pipes ="|"
-
-
-
-        private static Station GetStationData(string dataRow)
-=======
         public Station (int id, string stationsName, bool endStationName)
         {
             Id = id;

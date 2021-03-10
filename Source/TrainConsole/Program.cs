@@ -46,7 +46,6 @@ namespace TrainConsole
             //p.StreamReader();
             var myInstance = new Station();
             myInstance.PopulateList();
->>>>>>> parent of 376c822 (Refact)
 
         }
     }
