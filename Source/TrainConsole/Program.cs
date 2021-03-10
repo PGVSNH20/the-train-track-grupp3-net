@@ -1,12 +1,11 @@
 ﻿using System;
-using TrainEngine;
-using TrainEngine.Models;
 using TrainEngine.Reader;
 
 namespace TrainConsole
 {
     class Program
-    {                
+    {
+        static readonly string _passangers = @"..\..\..\..\..\Data\passengers.txt";
         static void Main(string[] args)
         {
             Console.WriteLine("Train track!");
@@ -28,7 +27,11 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
+            FileReader p = new FileReader();
+            p.StreamReader(_passangers);
 
+<<<<<<< HEAD
+=======
             //testar att läsa in från tågfilen
             var trainUrl = @"..\..\..\..\..\Data\trains.txt";
             var train = new Train();
@@ -43,6 +46,7 @@ namespace TrainConsole
             //p.StreamReader();
             var myInstance = new Station();
             myInstance.PopulateList();
+>>>>>>> parent of 376c822 (Refact)
 
         }
     }
