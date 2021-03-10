@@ -8,5 +8,10 @@ namespace TrainConsole
 {
     class Trainstation
     {
+        private string Station { get; set; }
+        public Trainstation(string station)
+        {
+            Station = station;
+        }
     }
 }

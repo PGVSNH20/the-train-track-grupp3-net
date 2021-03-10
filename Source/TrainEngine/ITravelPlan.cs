@@ -13,5 +13,10 @@ namespace TrainEngine
         void Save(string path);
         void Load(string path);
 
+        ITravelPlan HeadTowards(object station);
+        ITravelPlan StartTrainAt(object time);
+
+        ITravelPlan StopTrainAt(object station, object time);
+        ITravelPlan GeneratePlan();
     }
 }
