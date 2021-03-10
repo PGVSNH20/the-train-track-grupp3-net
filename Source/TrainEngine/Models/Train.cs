@@ -9,6 +9,7 @@ namespace TrainConsole
 {
     public class Train
     {
+        static readonly string _trains = @"..\..\..\..\..\Data\trains.txt";
         public int TrainId { get; set; }
 
         public string TrainName { get; set; }
@@ -29,10 +30,10 @@ namespace TrainConsole
         }
 
 
-        public List<Train> PopulateList(string inputURL)
+        public List<Train> PopulateList()
         {
             FileReader p = new FileReader();
-            List<string> result = p.StreamReader(inputURL);
+            List<string> result = p.StreamReader(_trains);
 
             List<Train> trainList = new List<Train>();
 

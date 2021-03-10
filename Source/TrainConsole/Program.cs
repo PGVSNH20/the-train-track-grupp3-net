@@ -30,19 +30,18 @@ namespace TrainConsole
             //    .GeneratePlan();
 
             //testar att läsa in från tågfilen
-            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
             var train = new Train();
-            var result = train.PopulateList(trainUrl);
+            var result = train.PopulateList();
 
             foreach (var trainTest in result)
             {
                 Console.WriteLine(trainTest.TrainName);
             }
 
-            //FileReader p = new FileReader();
-            //p.StreamReader();
-            var myInstance = new Station();
-            myInstance.PopulateList();
+            var myStation = new Station();
+            var result2 = myStation.PopulateList();
+
+            result2.ForEach(x => Console.WriteLine(x.StationName));
 
         }
     }
