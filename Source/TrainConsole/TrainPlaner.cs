@@ -16,6 +16,16 @@ namespace TrainConsole
 
         public object Trainstation { get; set; }
 
+
+        public Train startStation { get; set; }
+
+        public Train endStation { get; set; }
+
+
+
+        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan ArrivalTime { get; set; }
+
         public TrainPlaner(Train train, Station station)
         {
             Train = train;
@@ -34,6 +44,7 @@ namespace TrainConsole
 
         public ITravelPlan HeadTowards(object station2)
         {
+
             return this;
         }
 
@@ -43,6 +54,7 @@ namespace TrainConsole
         }
         public ITravelPlan StopTrainAt(object station, object time)
         {
+            // Tar in tågstation och kollar genom stations.stationlist ifall stationen är en slutstation och returnerar isf annars så skrivs felmeddelande ut
             return this;
         }
 
