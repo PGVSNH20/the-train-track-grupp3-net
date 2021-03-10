@@ -27,9 +27,9 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
-
+            string url = @"..\..\..\..\..\Data\passengers.txt";
             FileReader p = new FileReader();
-            p.StreamReader();
+            p.StreamReader(url);
         }
     }
 }
