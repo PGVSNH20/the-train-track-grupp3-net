@@ -1,61 +1,56 @@
 ﻿using System;
-using TrainEngine;
-using TrainEngine.Models;
+using System.Collections.Generic;
+using System.Text;
 using TrainEngine.Reader;
 
-namespace TrainConsole
+namespace TrainEngine.Models
 {
-    class Program
+    public class Passenger
     {
-        static void Main(string[] args)
+        public int Id { get; set; }
+        public string Name { get; set; }
+        // GetPassengerData
+
+        public Passenger()
         {
-            Console.WriteLine("Train track!");
-            // Step 1:
-            // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
-            // Parse the trains (Data/trains.txt)
 
-            // Step 2:
-            // Make the trains run in treads
-            // Test
-            //Andreas testar
-
-            //Train train1 = new Train("Name of train");
-            //Trainstation station1 = new Trainstation("Gothenburg");
-            //Trainstation station2 = new Trainstation("Stockholm");
-
-            //ITravelPlan travelPlan = new TrainPlaner(train1, station1)
-            //        .HeadTowards(station2)
-            //        .StartTrainAt("10:23")
-            //        .StopTrainAt(station2, "14:53")
-            //    .GeneratePlan();
+        }
+        public Passenger(int passengerId, string passengerName)
+        {
+            Id = passengerId;
+            Name = passengerName;
+        }
 
 
+        public List<Passenger> PopulateList(string inputURL)
+        {
+            FileReader p = new FileReader();
+            List<string> result = p.StreamReader(inputURL);
 
-            //FileReader p = new FileReader();
-            //var result = p.StreamReader(trainUrl);
+            List<Passenger> passengerList = new List<Passenger>();
 
-            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
-            var train = new Train();
-            var trainResult = train.PopulateList(trainUrl);
-
-            foreach (var trainTest in trainResult)
+            foreach (var row in result)
             {
-                Console.WriteLine(trainTest.TrainName);
+                passengerList.Add(GetPassengerData(row));
             }
+            return passengerList;
+        }
 
-            var passengerUrl = @"..\..\..\..\..\Data\passengers.txt";
-            var passenger = new Passenger();
-            var passengerResult = passenger.PopulateList(passengerUrl);
+        public Passenger GetPassengerData(string dataRow)
+        {
+            string[] dataCol = dataRow.Split(';');
 
-            foreach (var passengerTest in passengerResult)
-            {
-                Console.WriteLine(passengerTest.Name);
-            }
+            var passengerId = int.Parse(dataCol[0]);
+            var passengerName = dataCol[1];
 
-            //FileReader p = new FileReader();
-            //p.StreamReader();
-            //Station myInstance = new Station();
-            //myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
+            return new Passenger(passengerId, passengerName);
+        }
+
+        // RandomizePassengerList
+        public Passenger[,] RandomizePassengerList(List<Passenger> passengers)
+        {
+            Passenger[,] passengerArray = new Passenger[2, 0];
+            return passengerArray;
         }
     }
 }
