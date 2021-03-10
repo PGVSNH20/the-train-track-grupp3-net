@@ -28,8 +28,6 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
-            FileReader p = new FileReader();
-            p.StreamReader(_passangers);
 
             //testar att läsa in från tågfilen
             var trainUrl = @"..\..\..\..\..\Data\trains.txt";
@@ -43,8 +41,9 @@ namespace TrainConsole
 
             //FileReader p = new FileReader();
             //p.StreamReader();
-            Station myInstance = new Station();
-            myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
+            var myInstance = new Station();
+            myInstance.PopulateList();
+
         }
     }
 }
