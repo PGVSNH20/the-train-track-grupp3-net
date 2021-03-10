@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace TrainEngine.Utilities
@@ -7,15 +8,31 @@ namespace TrainEngine.Utilities
     public class TextParser
     {
 
-        public static string[] GetData(string pathToFile)
+        public static List<string> StreamReader(string path)
         {
-            string[] dataRow = { "rad1", "rad2", "rad3" };
-            //using (resource)
-            //{
-            // stream here and split rows
-            //}
+            try
+            {
+                List<string> row = new List<string>();
+                // Startar stream, letar rätt på fil
+                using (StreamReader streamReader = new StreamReader(path))
+                {
 
-            return dataRow; 
+                    string line;
+                    // Läser filen & skriver ut
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        row.Add(line);
+                    }
+                    return row;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
     }
 }
+
