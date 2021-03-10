@@ -1,11 +1,15 @@
 ﻿using System;
+<<<<<<< Updated upstream
+=======
+using TrainEngine;
+using TrainEngine.Models;
+>>>>>>> Stashed changes
 using TrainEngine.Reader;
 
 namespace TrainConsole
 {
     class Program
-    {
-        static readonly string _passangers = @"..\..\..\..\..\Data\passengers.txt";
+    {                
         static void Main(string[] args)
         {
             Console.WriteLine("Train track!");
@@ -27,10 +31,17 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
+<<<<<<< Updated upstream
             FileReader p = new FileReader();
             p.StreamReader(_passangers);
 
 
+=======
+            //FileReader p = new FileReader();
+            //p.StreamReader();
+            Station myInstance = new Station();
+            myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
+>>>>>>> Stashed changes
         }
     }
 }
