@@ -34,18 +34,29 @@ namespace TrainConsole
             //FileReader p = new FileReader();
             //var result = p.StreamReader(trainUrl);
 
-            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
+            // Testar att skriva ut stationer
+            Console.WriteLine();
+            var station = new Station();
+            var stationResult = station.PopulateList();
+            foreach (var stationTest in stationResult)
+            {
+                Console.WriteLine(stationTest.StationName);
+            }
+
+            // Testar att skriva ut tåg
+            Console.WriteLine();
             var train = new Train();
-            var trainResult = train.PopulateList(trainUrl);
+            var trainResult = train.PopulateList();
 
             foreach (var trainTest in trainResult)
             {
                 Console.WriteLine(trainTest.TrainName);
             }
 
-            var passengerUrl = @"..\..\..\..\..\Data\passengers.txt";
+            // Testar att skriva ut passagerare
+            Console.WriteLine();
             var passenger = new Passenger();
-            var passengerResult = passenger.PopulateList(passengerUrl);
+            var passengerResult = passenger.PopulateList();
 
             foreach (var passengerTest in passengerResult)
             {

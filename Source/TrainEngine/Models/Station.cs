@@ -9,7 +9,7 @@ namespace TrainEngine.Models
     {
         public Station()
         {
-            ListOfStations = PopulateList(_stations);
+            //ListOfStations = PopulateList(_stations);
         }
         static readonly string _stations = @"..\..\..\..\..\Data\stations.txt";
 
@@ -20,18 +20,25 @@ namespace TrainEngine.Models
 
         public List<Station> ListOfStations { get; set; }
 
-        List<Station> PopulateList(string inputURL)
+        public List<Station> PopulateList()
         {
             FileReader p = new FileReader();
-            List<string> result = p.StreamReader(inputURL);
+            List<string> result = p.StreamReader(_stations);
 
-            List<Station> newList = new List<Station>();
+            List<Station> stationList = new List<Station>();
+
+            bool hasSkippedFirstRow = false;
             foreach (var row in result)
             {
-                newList.Add(GetStationData(row));
+                if (hasSkippedFirstRow == false)
+                {
+                    hasSkippedFirstRow = true;
+                    continue;
+                }
+                stationList.Add(GetStationData(row));
             }
 
-            return newList;
+            return stationList;
         }
 
         // Read a row from txt-file and split by pipes ="|"
