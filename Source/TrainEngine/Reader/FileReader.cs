@@ -13,7 +13,7 @@ namespace TrainEngine.Reader
             try
             {
                 // Startar stream, letar rätt på fil
-                using (StreamReader streamReader = new StreamReader(@"C:\Users\magnu\OneDrive\Skrivbord\.NetUtveckling\Dataåtkomster i .NET\Gruppuppgift\TheTrainTrack\Source\TrainEngine\Reader\TxtFiles\passengers.txt"))
+                using (StreamReader streamReader = new StreamReader(@"..\..\..\..\..\Data\passengers.txt"))
                 {
                     string line;
 
