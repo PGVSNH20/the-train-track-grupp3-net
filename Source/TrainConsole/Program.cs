@@ -1,9 +1,6 @@
 ﻿using System;
-<<<<<<< Updated upstream
-=======
 using TrainEngine;
 using TrainEngine.Models;
->>>>>>> Stashed changes
 using TrainEngine.Reader;
 
 namespace TrainConsole
@@ -31,17 +28,23 @@ namespace TrainConsole
             //        .StartTrainAt("10:23")
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
-<<<<<<< Updated upstream
             FileReader p = new FileReader();
             p.StreamReader(_passangers);
 
+            //testar att läsa in från tågfilen
+            var trainUrl = @"..\..\..\..\..\Data\trains.txt";
+            var train = new Train();
+            var result = train.PopulateList(trainUrl);
 
-=======
+            foreach (var trainTest in result)
+            {
+                Console.WriteLine(trainTest.TrainName);
+            }
+
             //FileReader p = new FileReader();
             //p.StreamReader();
             Station myInstance = new Station();
             myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
->>>>>>> Stashed changes
         }
     }
 }
