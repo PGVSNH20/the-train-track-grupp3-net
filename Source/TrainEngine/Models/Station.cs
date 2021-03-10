@@ -17,11 +17,15 @@ namespace TrainEngine.Models
         public string StationName { get; set; }
         public bool EndStation { get; set; }
 
-        // Read a row from txt-file and split by pipes ="|"
-
-
-
-        private static Station GetStationData(string dataRow)
+        }
+        public Station (int id, string stationsName, bool endStationName)
+        {
+            Id = id;
+            StationName = stationsName;
+            EndStation = endStationName;
+        }
+        
+        public List<Station> PopulateList()
         {
 
             string[] dataCol = dataRow.Split('|');
