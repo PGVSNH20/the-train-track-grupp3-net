@@ -54,8 +54,17 @@ namespace TrainConsole
         }
         public ITravelPlan StopTrainAt(object station, object time)
         {
+            if ((station as Station).EndStation)
+            {
+                return this;
+            }
+            else
+            {
+                return null;
+                Console.WriteLine("Ingen slutstation");
+            }
             // Tar in tågstation och kollar genom stations.stationlist ifall stationen är en slutstation och returnerar isf annars så skrivs felmeddelande ut
-            return this;
+           
         }
 
         public ITravelPlan GeneratePlan()
