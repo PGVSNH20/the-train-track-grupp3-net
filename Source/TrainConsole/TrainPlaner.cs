@@ -80,9 +80,7 @@ namespace TrainConsole
 
         public ITravelPlan GeneratePlan()
         {
-            // Implement depaturetime later;
-            string startTime = "10:45:00";
-
+           
             Station startStation = this.Trainstation as Station;
 
             Console.WriteLine("Avgång:");
