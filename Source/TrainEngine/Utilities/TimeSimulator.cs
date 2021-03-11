@@ -19,14 +19,14 @@ namespace TrainEngine.Utilities
         public TimeSimulator(TimeSpan departure, TimeSpan arrival)
         {
             _departureTime = departure;
-            _arrivalTime = _arrivalTime;
+            _arrivalTime = arrival;
         }
 
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
 
 
-        public static void Run(string train, string station1, string station2, string loadPlan = "Default")
+        public void Run(string train, string station1, string station2, string loadPlan = "Default")
         {
             // loadPlan laddar StartStation - Slutstation respektive start & sluttid samt Tågnamn + Id
 
