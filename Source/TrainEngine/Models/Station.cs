@@ -9,11 +9,32 @@ namespace TrainEngine.Models
     {
         public Station()
         {
-            //ListOfStations = PopulateList(_stations);
+         
+        }
+        public Station(string name)
+        {
+            Station sta = new Station();
+
+            //PopulateList().ForEach(s => station = (s.StationName == name) ? s : null);
+
+            foreach (var station in PopulateList())
+            {
+                if (name == station.StationName)
+                {
+                    sta = station;
+                    break;
+                }
+               
+            }
+
+            Id = sta.Id;
+            StationName = sta.StationName;
+            EndStation = sta.EndStation;
+
         }
         static readonly string _stations = @"..\..\..\..\..\Data\stations.txt";
 
-        // Id|StationName|EndStatio
+        // Id|StationName|EndStation
         public int Id { get; set; }
         public string StationName { get; set; }
         public bool EndStation { get; set; }

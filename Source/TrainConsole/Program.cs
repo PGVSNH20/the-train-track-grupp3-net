@@ -33,13 +33,15 @@ namespace TrainConsole
 
             Train goldenArrow = new Train() { TrainId = 2, TrainName = "Golden Arrow", MaxSpeed = 120, IsOperated = true };
 
-            Station mountJuanceo = new Station() { Id = 2, StationName = "Mount Juanceo", EndStation = false };
-            Station grandRetro = new Station() { Id = 3, StationName = "Grand Retro", EndStation = true };
+            //Station mountJuanceo = new Station() { Id = 2, StationName = "Mount Juanceo", EndStation = false };
+            //Station grandRetro = new Station() { Id = 3, StationName = "Grand Retro", EndStation = true };
+            Station station1 = new Station("Mount Juanceo");
+            Station station2 = new Station("Grand Retro");
 
             //2|Mount Juanceo|false
             //3 | Grand Retro | true
 
-            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, mountJuanceo).StopTrainAt(grandRetro, "14:53").GeneratePlan();
+            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, station1).StopTrainAt(station2, "14:53").GeneratePlan();
 
 
             // Testar tidsimulatorn
