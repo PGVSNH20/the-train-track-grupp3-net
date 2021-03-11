@@ -17,12 +17,11 @@ namespace TrainConsole
 
         public object Trainstation { get; set; }
 
-
         public Station StartStation { get; set; }
 
+        public List<Station> StationsBeetween { get; set; } = new List<Station>();
+        public List<TimeSpan> StopTimes { get; set; } = new List<TimeSpan>();
         public Station EndStation { get; set; } 
-       
-
 
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
@@ -45,35 +44,37 @@ namespace TrainConsole
 
         public ITravelPlan HeadTowards(object station2)
         {
+            // Slustation
+            var endStation = station2 as Station;
+            this.EndStation = endStation.EndStation == true ? station2 as Station : null;
 
             return this;
         }
 
         public ITravelPlan StartTrainAt(object time)
         {
+            this.DepartureTime = TimeSpan.Parse(time.ToString());
             return this;
         }
         public ITravelPlan StopTrainAt(object station, object time)
         {
             //Station endStation = new Station();
-            var endStation = station as Station;
+            Station stopStation = station as Station;
 
-            this.EndStation = endStation.EndStation == true ?  station as Station : null;
-
-            this.ArrivalTime = TimeSpan.Parse(time.ToString());
+            if (stopStation.StationName == this.EndStation.StationName)
+            {
+                this.EndStation = stopStation;
+                this.ArrivalTime = TimeSpan.Parse(time.ToString());
+            }
+            // Mellanliggande station sparas i en lista
+            else
+            {
+                this.StationsBeetween.Add(stopStation);
+                this.StopTimes.Add(TimeSpan.Parse(time.ToString()));
+            }
+            
             return this;
-            //if ((station as Station).EndStation)
-            //{
-            //    this.EndStation = endStation;
-            //    return this;
-            //}
-            //else
-            //{
-            //    return null;
-            //    Console.WriteLine("Ingen slutstation");
-            //}
-            // Tar in tågstation och kollar genom stations.stationlist ifall stationen är en slutstation och returnerar isf annars så skrivs felmeddelande ut
-           
+ 
         }
 
         public ITravelPlan GeneratePlan()
@@ -86,11 +87,21 @@ namespace TrainConsole
             Console.WriteLine("Avgång:");
             Console.WriteLine(startStation.StationName + " - " + this.EndStation.StationName);
             Console.WriteLine();
-            Console.WriteLine($"{startTime}\t{startStation.StationName}" +
+            Console.WriteLine($"{this.DepartureTime}\t{startStation.StationName}" +
                 $"\t{ (this.Train as Train).TrainName}");
+            if (StationsBeetween.Count > 0)
+            {
+                Console.WriteLine("Massa mellanligande stationer");
+                for (int i = 0; i < StationsBeetween.Count; i++)
+                {
+                    Console.WriteLine(StationsBeetween[i]);
+                    Console.WriteLine(StopTimes[i]);
+                }
+            }
             Console.WriteLine($"{this.ArrivalTime.ToString()}\t{this.EndStation.StationName}" +
                  $"\t{ (this.Train as Train).TrainId}");
             return this;
         }
+
     }
 }

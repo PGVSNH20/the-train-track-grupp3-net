@@ -41,7 +41,11 @@ namespace TrainConsole
             //2|Mount Juanceo|false
             //3 | Grand Retro | true
 
-            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, station1).StopTrainAt(station2, "14:53").GeneratePlan();
+            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, station1)
+                .HeadTowards(station2)
+                .StartTrainAt("10:12")
+                .StopTrainAt(station2, "14:53")
+                .GeneratePlan();
 
 
             // Testar tidsimulatorn
