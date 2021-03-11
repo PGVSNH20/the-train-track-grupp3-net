@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TrainEngine;
 using TrainEngine.Models;
@@ -40,7 +42,15 @@ namespace TrainConsole
 
         public void Save(string path)
         {
-            return;
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            string jsonString = JsonSerializer.Serialize(this, options);
+
+            Console.WriteLine("Sparar...");
+            File.WriteAllText(path, jsonString);
         }
 
         public ITravelPlan HeadTowards(object station2)
