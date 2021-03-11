@@ -5,7 +5,7 @@ using TrainEngine.Reader;
 
 namespace TrainEngine.Models
 {
-    class Timetable
+    public class Timetable
     {
         /*        
             TraindId,StationId,DepartureTime,ArrivalTime
@@ -18,9 +18,12 @@ namespace TrainEngine.Models
          */
         public int Id { get; set; }
         public int StationId { get; set; }
-        public TimeSpan DepartureTime { get; set; }
-        public TimeSpan ArrivalTime { get; set; }
+        public TimeSpan? DepartureTime { get; set; }
+        public TimeSpan? ArrivalTime { get; set; }
+        public Timetable()
+        {
 
+        }
         public Timetable(int id, int stationId, TimeSpan departureTimne, TimeSpan arrivalTime)
         {
             Id = id;

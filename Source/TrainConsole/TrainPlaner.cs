@@ -12,16 +12,18 @@ namespace TrainConsole
 {
     class TrainPlaner : ITravelPlan
     {
+        private Timetable timetable = new Timetable();
+        public List<Timetable> Timeplan { get; set; } = new List<Timetable>();
 
-        public List<object> TimeTable { get; set; }
 
-        public object Train { get; set; }
+        public Train Train { get; set; }
 
-        public object Trainstation { get; set; }
+        public Station Trainstation { get; set; } = new Station();
 
+        // Cuttar dem här
         public Station StartStation { get; set; }
 
-        public List<Station> StationsBeetween { get; set; } = new List<Station>();
+        public List<Station> StationsBeetween { get; set; }
         public List<TimeSpan> StopTimes { get; set; } = new List<TimeSpan>();
         public Station EndStation { get; set; }
 
@@ -31,8 +33,16 @@ namespace TrainConsole
         public TrainPlaner(Train train, Station station)
         {
             Train = train;
-            //Trainstation = station;
-            StartStation = station;
+            Trainstation = station;
+            StartStation = station; // Remooooooove later aligator!
+
+            timetable.Id = train.TrainId;
+            timetable.StationId = station.Id;
+
+
+            Timeplan.Add(timetable);
+
+
         }
 
         public void Load(string path)
@@ -53,11 +63,21 @@ namespace TrainConsole
             File.WriteAllText(path, jsonString);
         }
 
-        public ITravelPlan HeadTowards(object station2)
+        public ITravelPlan HeadTowards(Station station2)
         {
             // Slustation
             var endStation = station2 as Station;
             this.EndStation = endStation.EndStation == true ? station2 as Station : null;
+
+            if (station2.EndStation)
+            {
+                Timetable endstation = new Timetable();
+
+                endstation.Id = this.Train.TrainId;
+                endstation.StationId = station2.Id;
+                Timeplan.Add(endstation);
+            }
+            else Console.WriteLine("Ingen ändstation det här inte");
 
             return this;
         }
@@ -65,9 +85,18 @@ namespace TrainConsole
         public ITravelPlan StartTrainAt(object time)
         {
             this.DepartureTime = TimeSpan.Parse(time.ToString());
+
+            foreach (var train in Timeplan)
+            {
+                if (train.DepartureTime == null)
+                {
+                    train.DepartureTime = TimeSpan.Parse(time.ToString());
+                    break;
+                }
+            }
             return this;
         }
-        public ITravelPlan StopTrainAt(object station, object time)
+        public ITravelPlan StopTrainAt(Station station, object time)
         {
             //Station endStation = new Station();
             Station stopStation = station as Station;
@@ -84,13 +113,23 @@ namespace TrainConsole
                 this.StopTimes.Add(TimeSpan.Parse(time.ToString()));
             }
 
+            foreach (var train in Timeplan)
+            {
+                if (train.DepartureTime == null) // Är det inte startstationen och 
+                {
+                    train.ArrivalTime = TimeSpan.Parse(time.ToString());
+                    break;
+                }
+            }
+
+
             return this;
 
         }
 
         public ITravelPlan GeneratePlan()
         {
-           
+
             Station startStation = this.Trainstation as Station;
 
             Console.WriteLine("Avgång:");
@@ -98,18 +137,47 @@ namespace TrainConsole
             Console.WriteLine();
             Console.WriteLine($"{this.DepartureTime}\t{StartStation.StationName}" +
                 $"\t{ (this.Train as Train).TrainName}");
-            if (StationsBeetween.Count > 0)
-            {
-                Console.WriteLine("Massa mellanligande stationer");
-                for (int i = 0; i < StationsBeetween.Count; i++)
-                {
-                    Console.WriteLine(StationsBeetween[i]);
-                    Console.WriteLine(StopTimes[i]);
-                }
-            }
+
             Console.WriteLine($"{this.ArrivalTime.ToString()}\t{this.EndStation.StationName}" +
                  $"\t{ (this.Train as Train).TrainId}");
-            Console.WriteLine();
+            Console.WriteLine("\n");
+
+            // Skriver ut bäst från lista istället för att initera massa propertyes
+
+            string endstation = Timeplan[Timeplan.Count - 1].StationId.ToString() ;
+
+            foreach (var station in Trainstation.PopulateList())
+            {
+                if (endstation == station.Id.ToString())
+                {
+                    endstation = station.StationName;
+                    break;
+                }
+            }
+
+            Console.WriteLine(Trainstation.StationName + " - " + endstation);
+            Console.WriteLine(Train.TrainName);
+            Console.WriteLine($"[{Train.TrainId}]".PadLeft(Train.TrainName.Length));
+            Console.WriteLine("--------------------------------------------------");
+
+            foreach (var trainTimePlan in Timeplan)
+            {
+   
+                foreach (var station in Trainstation.PopulateList())
+                {
+                    if (trainTimePlan.StationId == station.Id)
+                    {
+                        Console.WriteLine(station.StationName);
+                        break;
+                    }
+                }
+                if (trainTimePlan.DepartureTime.HasValue)   Console.WriteLine("Avgång: " + trainTimePlan.DepartureTime);
+                if(trainTimePlan.ArrivalTime.HasValue)      Console.WriteLine("Ankomst: " + trainTimePlan.ArrivalTime);
+                
+                Console.WriteLine();
+            }
+
+
             return this;
         }
         public ITravelPlan Simulate()

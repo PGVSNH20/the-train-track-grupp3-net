@@ -47,7 +47,7 @@ namespace TrainConsole
                 .StopTrainAt(station2, "14:53")
                 .GeneratePlan();
             
-            travelPlan.Save(@"..\..\..\..\..\Data\travelPlans.txt");
+            travelPlan.Save(@"..\..\..\..\..\Data\travelPlans.json");
 
             //travelPlan.Save("Sjumilaskogen");
             travelPlan.Simulate();
