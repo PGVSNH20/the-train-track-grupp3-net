@@ -18,5 +18,8 @@ namespace TrainEngine
 
         ITravelPlan StopTrainAt(object station, object time);
         ITravelPlan GeneratePlan();
+
+        ITravelPlan Simulate();
+
     }
 }

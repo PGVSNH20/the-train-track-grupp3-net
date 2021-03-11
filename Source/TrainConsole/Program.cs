@@ -47,17 +47,9 @@ namespace TrainConsole
                 .StopTrainAt(station2, "14:53")
                 .GeneratePlan();
 
-
-            // Testar tidsimulatorn
-             TimeSpan departureTime = new TimeSpan(10, 30, 0);
-             TimeSpan arrivalTime = new TimeSpan(12, 45, 0);
-
-             TimeSimulator simulator = new TimeSimulator(departureTime, arrivalTime);
-            simulator.Run(
-                goldenArrow.TrainName,
-                "Gävle", 
-                "Stockholm", 
-                "Här ska man ladda travelplan objektet eller en fil så man slipper skriva tidigare inparametrar");
+            travelPlan.Save("Sjumilaskogen");
+            travelPlan.Simulate();
+          
 
             //FileReader p = new FileReader();
             //var result = p.StreamReader(trainUrl);
