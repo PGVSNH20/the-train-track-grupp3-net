@@ -1,0 +1,92 @@
+{
+  "Timeplan": [
+    {
+      "Id": 2,
+      "StationId": 2,
+      "DepartureTime": {
+        "Ticks": 367200000000,
+        "Days": 0,
+        "Hours": 10,
+        "Milliseconds": 0,
+        "Minutes": 12,
+        "Seconds": 0,
+        "TotalDays": 0.425,
+        "TotalHours": 10.2,
+        "TotalMilliseconds": 36720000,
+        "TotalMinutes": 612,
+        "TotalSeconds": 36720
+      },
+      "ArrivalTime": null
+    },
+    {
+      "Id": 2,
+      "StationId": 3,
+      "DepartureTime": null,
+      "ArrivalTime": {
+        "Ticks": 535800000000,
+        "Days": 0,
+        "Hours": 14,
+        "Milliseconds": 0,
+        "Minutes": 53,
+        "Seconds": 0,
+        "TotalDays": 0.6201388888888889,
+        "TotalHours": 14.883333333333333,
+        "TotalMilliseconds": 53580000,
+        "TotalMinutes": 893,
+        "TotalSeconds": 53580
+      }
+    }
+  ],
+  "Train": {
+    "TrainId": 2,
+    "TrainName": "Golden Arrow",
+    "MaxSpeed": 120,
+    "IsOperated": true
+  },
+  "Trainstation": {
+    "Id": 2,
+    "StationName": "Mount Juanceo",
+    "EndStation": false,
+    "ListOfStations": null
+  },
+  "StartStation": {
+    "Id": 2,
+    "StationName": "Mount Juanceo",
+    "EndStation": false,
+    "ListOfStations": null
+  },
+  "StationsBeetween": null,
+  "StopTimes": [],
+  "EndStation": {
+    "Id": 3,
+    "StationName": "Grand Retro",
+    "EndStation": true,
+    "ListOfStations": null
+  },
+  "DepartureTime": {
+    "Ticks": 367200000000,
+    "Days": 0,
+    "Hours": 10,
+    "Milliseconds": 0,
+    "Minutes": 12,
+    "Seconds": 0,
+    "TotalDays": 0.425,
+    "TotalHours": 10.2,
+    "TotalMilliseconds": 36720000,
+    "TotalMinutes": 612,
+    "TotalSeconds": 36720
+  },
+  "ArrivalTime": {
+    "Ticks": 535800000000,
+    "Days": 0,
+    "Hours": 14,
+    "Milliseconds": 0,
+    "Minutes": 53,
+    "Seconds": 0,
+    "TotalDays": 0.6201388888888889,
+    "TotalHours": 14.883333333333333,
+    "TotalMilliseconds": 53580000,
+    "TotalMinutes": 893,
+    "TotalSeconds": 53580
+  }
+}
