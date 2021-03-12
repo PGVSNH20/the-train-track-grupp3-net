@@ -8,6 +8,7 @@ namespace TrainConsole
 {
     class Program
     {
+        static readonly string _defaultSavePath = @"..\..\..\..\..\Data\";
         static void Main(string[] args)
         {
             Console.WriteLine("Train track!");
@@ -47,7 +48,7 @@ namespace TrainConsole
                 .StopTrainAt(station2, "14:53")
                 .GeneratePlan();
             
-            travelPlan.Save(@"..\..\..\..\..\Data\");
+            travelPlan.Save(_defaultSavePath);
 
             //travelPlan.Save("Sjumilaskogen");
             travelPlan.Simulate();
