@@ -61,7 +61,7 @@ namespace TrainConsole
 
             Console.WriteLine("Sparar...");
 
-            string fullPath = @$"{path}-{Train.TrainId}-{Train.TrainName}-{DateTime.Now.ToString("dd/MM/yyyy")}.json";
+            string fullPath = @$"{path}travelPlans-{Train.TrainId}-{Train.TrainName}-{DateTime.Now.ToString("dd/MM/yyyy")}.json";
             File.WriteAllText(fullPath, jsonString);
         }
 
