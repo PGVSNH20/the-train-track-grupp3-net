@@ -2,38 +2,68 @@
   "Timeplan": [
     {
       "Id": 2,
-      "StationId": 2,
+      "StationId": 1,
       "DepartureTime": {
-        "Ticks": 367200000000,
+        "Ticks": 372000000000,
         "Days": 0,
         "Hours": 10,
         "Milliseconds": 0,
-        "Minutes": 12,
+        "Minutes": 20,
         "Seconds": 0,
-        "TotalDays": 0.425,
-        "TotalHours": 10.2,
-        "TotalMilliseconds": 36720000,
-        "TotalMinutes": 612,
-        "TotalSeconds": 36720
+        "TotalDays": 0.4305555555555556,
+        "TotalHours": 10.333333333333334,
+        "TotalMilliseconds": 37200000,
+        "TotalMinutes": 620,
+        "TotalSeconds": 37200
       },
       "ArrivalTime": null
+    },
+    {
+      "Id": 2,
+      "StationId": 2,
+      "DepartureTime": {
+        "Ticks": 387000000000,
+        "Days": 0,
+        "Hours": 10,
+        "Milliseconds": 0,
+        "Minutes": 45,
+        "Seconds": 0,
+        "TotalDays": 0.4479166666666667,
+        "TotalHours": 10.75,
+        "TotalMilliseconds": 38700000,
+        "TotalMinutes": 645,
+        "TotalSeconds": 38700
+      },
+      "ArrivalTime": {
+        "Ticks": 385800000000,
+        "Days": 0,
+        "Hours": 10,
+        "Milliseconds": 0,
+        "Minutes": 43,
+        "Seconds": 0,
+        "TotalDays": 0.4465277777777778,
+        "TotalHours": 10.716666666666667,
+        "TotalMilliseconds": 38580000,
+        "TotalMinutes": 643,
+        "TotalSeconds": 38580
+      }
     },
     {
       "Id": 2,
       "StationId": 3,
       "DepartureTime": null,
       "ArrivalTime": {
-        "Ticks": 535800000000,
+        "Ticks": 395400000000,
         "Days": 0,
-        "Hours": 14,
+        "Hours": 10,
         "Milliseconds": 0,
-        "Minutes": 53,
+        "Minutes": 59,
         "Seconds": 0,
-        "TotalDays": 0.6201388888888889,
-        "TotalHours": 14.883333333333333,
-        "TotalMilliseconds": 53580000,
-        "TotalMinutes": 893,
-        "TotalSeconds": 53580
+        "TotalDays": 0.4576388888888889,
+        "TotalHours": 10.983333333333333,
+        "TotalMilliseconds": 39540000,
+        "TotalMinutes": 659,
+        "TotalSeconds": 39540
       }
     }
   ],
@@ -44,49 +74,9 @@
     "IsOperated": true
   },
   "Trainstation": {
-    "Id": 2,
-    "StationName": "Mount Juanceo",
-    "EndStation": false,
-    "ListOfStations": null
-  },
-  "StartStation": {
-    "Id": 2,
-    "StationName": "Mount Juanceo",
-    "EndStation": false,
-    "ListOfStations": null
-  },
-  "StationsBeetween": null,
-  "StopTimes": [],
-  "EndStation": {
-    "Id": 3,
-    "StationName": "Grand Retro",
+    "Id": 1,
+    "StationName": "Stonecro",
     "EndStation": true,
     "ListOfStations": null
-  },
-  "DepartureTime": {
-    "Ticks": 367200000000,
-    "Days": 0,
-    "Hours": 10,
-    "Milliseconds": 0,
-    "Minutes": 12,
-    "Seconds": 0,
-    "TotalDays": 0.425,
-    "TotalHours": 10.2,
-    "TotalMilliseconds": 36720000,
-    "TotalMinutes": 612,
-    "TotalSeconds": 36720
-  },
-  "ArrivalTime": {
-    "Ticks": 535800000000,
-    "Days": 0,
-    "Hours": 14,
-    "Milliseconds": 0,
-    "Minutes": 53,
-    "Seconds": 0,
-    "TotalDays": 0.6201388888888889,
-    "TotalHours": 14.883333333333333,
-    "TotalMilliseconds": 53580000,
-    "TotalMinutes": 893,
-    "TotalSeconds": 53580
   }
 }

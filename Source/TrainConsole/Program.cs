@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using TrainEngine;
 using TrainEngine.Models;
 using TrainEngine.Reader;
@@ -31,28 +32,32 @@ namespace TrainConsole
             //        .StopTrainAt(station2, "14:53")
             //    .GeneratePlan();
 
-
+            // Daniel
             Train goldenArrow = new Train() { TrainId = 2, TrainName = "Golden Arrow", MaxSpeed = 120, IsOperated = true };
 
             //Station mountJuanceo = new Station() { Id = 2, StationName = "Mount Juanceo", EndStation = false };
             //Station grandRetro = new Station() { Id = 3, StationName = "Grand Retro", EndStation = true };
-            Station station1 = new Station("Mount Juanceo");
-            Station station2 = new Station("Grand Retro");
+            Station stonecro = new Station("Stonecro");
+            Station mountJuanceo = new Station("Mount Juanceo");
+            Station grandRetro = new Station("Grand Retro");
+
 
             //2|Mount Juanceo|false
             //3 | Grand Retro | true
+            
+            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, stonecro)
+                .HeadTowards(grandRetro)
+                .StartTrainAt("10:20")
+                .StopTrainAt(mountJuanceo, "10:43")
+                .StartTrainAt("10:45")
+                .StopTrainAt(grandRetro, "10:59")
 
-            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, station1)
-                .HeadTowards(station2)
-                .StartTrainAt("10:12")
-                .StopTrainAt(station2, "14:53")
                 .GeneratePlan();
             
             travelPlan.Save(_defaultSavePath);
 
             //travelPlan.Save("Sjumilaskogen");
             travelPlan.Simulate();
-          
 
             //FileReader p = new FileReader();
             //var result = p.StreamReader(trainUrl);

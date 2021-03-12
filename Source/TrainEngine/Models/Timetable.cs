@@ -2,20 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using TrainEngine.Reader;
+using TrainConsole;
 
 namespace TrainEngine.Models
 {
     public class Timetable
     {
-        /*        
-            TraindId,StationId,DepartureTime,ArrivalTime
-            2,1,10:20,null
-            2,2,10:45,10:43
-            2,3,null,10:59
-            3,3,10:23,null
-            3,4,10:55,10:53
-            3,1,null,11:15
-         */
         public int Id { get; set; }
         public int StationId { get; set; }
         public TimeSpan? DepartureTime { get; set; }
@@ -41,7 +33,6 @@ namespace TrainEngine.Models
             bool hasSkippedFirstRow = false;
             foreach (var row in result)
             {
-
                 if (hasSkippedFirstRow == false)
                 {
                     hasSkippedFirstRow = true;
@@ -49,7 +40,6 @@ namespace TrainEngine.Models
                 }
 
                 trainList.Add(GetTimeTableData(row));
-
             }
             return trainList;
         }

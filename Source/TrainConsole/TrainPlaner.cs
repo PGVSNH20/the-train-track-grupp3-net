@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using TrainEngine;
 using TrainEngine.Models;
@@ -12,37 +13,23 @@ namespace TrainConsole
 {
     class TrainPlaner : ITravelPlan
     {
-        private Timetable timetable = new Timetable();
         public List<Timetable> Timeplan { get; set; } = new List<Timetable>();
-
 
         public Train Train { get; set; }
 
         public Station Trainstation { get; set; } = new Station();
 
-        // Cuttar dem här
-        public Station StartStation { get; set; }
-
-        public List<Station> StationsBeetween { get; set; }
-        public List<TimeSpan> StopTimes { get; set; } = new List<TimeSpan>();
-        public Station EndStation { get; set; }
-
-        public TimeSpan DepartureTime { get; set; }
-        public TimeSpan ArrivalTime { get; set; }
-
         public TrainPlaner(Train train, Station station)
         {
             Train = train;
             Trainstation = station;
-            StartStation = station; // Remooooooove later aligator!
 
-            timetable.Id = train.TrainId;
-            timetable.StationId = station.Id;
-
-
-            Timeplan.Add(timetable);
-
-
+            // Kollar om tåget är en slutstation för då kan det även vara en startstation
+            Timetable startstation = new Timetable();
+            startstation.Id = train.TrainId;
+            startstation.StationId = station.Id;
+            
+            Timeplan.Add(startstation);
         }
 
         public void Load(string path)
@@ -67,9 +54,6 @@ namespace TrainConsole
 
         public ITravelPlan HeadTowards(Station station2)
         {
-            // Slustation
-            var endStation = station2 as Station;
-            this.EndStation = endStation.EndStation == true ? station2 as Station : null;
 
             if (station2.EndStation)
             {
@@ -86,7 +70,7 @@ namespace TrainConsole
 
         public ITravelPlan StartTrainAt(object time)
         {
-            this.DepartureTime = TimeSpan.Parse(time.ToString());
+            //this.DepartureTime = TimeSpan.Parse(time.ToString());
 
             foreach (var train in Timeplan)
             {
@@ -98,87 +82,101 @@ namespace TrainConsole
             }
             return this;
         }
+
         public ITravelPlan StopTrainAt(Station station, object time)
         {
-            //Station endStation = new Station();
-            Station stopStation = station as Station;
+            Station startStation = this.Trainstation;
 
-            if (stopStation.StationName == this.EndStation.StationName)
+
+            /*
+             61
+
+            List<int> initializers = new List <int>();
+
+            initializers.Add(1);
+            initializers.Add(3);
+
+            int index = initializers.IndexOf(3);
+            initializers.Insert(index, 2);
+             
+             */
+           
+            if (station.EndStation == false)
             {
-                this.EndStation = stopStation;
-                this.ArrivalTime = TimeSpan.Parse(time.ToString());
-            }
-            // Mellanliggande station sparas i en lista
-            else
-            {
-                this.StationsBeetween.Add(stopStation);
-                this.StopTimes.Add(TimeSpan.Parse(time.ToString()));
+                Timetable middlestation = new Timetable();
+
+                int endstationIndex = Timeplan.Count - 1;
+                int index = (Timeplan.Count > 1) ? endstationIndex : 0;
+
+                middlestation.Id = this.Train.TrainId;
+                middlestation.StationId = station.Id;
+                middlestation.ArrivalTime = TimeSpan.Parse(time.ToString());
+                Timeplan.Insert(endstationIndex, middlestation);
+
             }
 
-            foreach (var train in Timeplan)
+            foreach (var location in Timeplan)
             {
-                if (train.DepartureTime == null) // Är det inte startstationen och 
+                if (location.StationId == startStation.Id) continue; // Enligt unittest ska den skriva ut tågnnamn och id om den är ensam
+
+                if (station.EndStation == true && location.DepartureTime == null) // Är det inte startstationen och 
                 {
-                    train.ArrivalTime = TimeSpan.Parse(time.ToString());
+                    location.ArrivalTime = TimeSpan.Parse(time.ToString());
+                    break;
+                }
+                else if (station.Id != startStation.Id && location.ArrivalTime == null) // Får kika senare m den ska ta bort
+                {
+                    location.ArrivalTime = TimeSpan.Parse(time.ToString());
                     break;
                 }
             }
-
 
             return this;
 
         }
+        private string ReturnNameFromId(int stationId, List<Station> stations)
+        {
+            foreach (var station in stations)
+            {
+                if (stationId.Equals(station.Id))
+                {
+                    return station.StationName;
+                }
+            }
+            return "Station not found";  
+   
+        }
+
 
         public ITravelPlan GeneratePlan()
         {
+            var trainstations = Trainstation.PopulateList();
 
-            Station startStation = this.Trainstation as Station;
+            int endStationId = this.Timeplan[Timeplan.Count - 1].StationId;
+            string endStationName = ReturnNameFromId(endStationId, trainstations);
 
-            Console.WriteLine("Avgång:");
-            Console.WriteLine(StartStation.StationName + " - " + this.EndStation.StationName);
-            Console.WriteLine();
-            Console.WriteLine($"{this.DepartureTime}\t{StartStation.StationName}" +
-                $"\t{ (this.Train as Train).TrainName}");
 
-            Console.WriteLine($"{this.ArrivalTime.ToString()}\t{this.EndStation.StationName}" +
-                 $"\t{ (this.Train as Train).TrainId}");
-            Console.WriteLine("\n");
-
-            // Skriver ut bäst från lista istället för att initera massa propertyes
-
-            string endstation = Timeplan[Timeplan.Count - 1].StationId.ToString() ;
-
-            foreach (var station in Trainstation.PopulateList())
-            {
-                if (endstation == station.Id.ToString())
-                {
-                    endstation = station.StationName;
-                    break;
-                }
-            }
-
-            Console.WriteLine(Trainstation.StationName + " - " + endstation);
+            Console.WriteLine(Trainstation.StationName + " - " + endStationName );
             Console.WriteLine(Train.TrainName);
             Console.WriteLine($"[{Train.TrainId}]".PadLeft(Train.TrainName.Length));
             Console.WriteLine("--------------------------------------------------");
 
-            foreach (var trainTimePlan in Timeplan)
+            foreach (var row in Timeplan)
             {
-   
-                foreach (var station in Trainstation.PopulateList())
-                {
-                    if (trainTimePlan.StationId == station.Id)
-                    {
-                        Console.WriteLine(station.StationName);
-                        break;
-                    }
-                }
-                if (trainTimePlan.DepartureTime.HasValue)   Console.WriteLine("Avgång: " + trainTimePlan.DepartureTime);
-                if(trainTimePlan.ArrivalTime.HasValue)      Console.WriteLine("Ankomst: " + trainTimePlan.ArrivalTime);
-                
-                Console.WriteLine();
+                Console.WriteLine(row.Id + " " + ReturnNameFromId(row.StationId, trainstations) + " " +  row.DepartureTime + " " +  row.ArrivalTime);
             }
 
+            Console.WriteLine("============================================================");
+            foreach (var trainTimePlan in Timeplan)
+            {
+                string station = ReturnNameFromId(trainTimePlan.StationId, trainstations);
+
+                Console.WriteLine(station);
+                if (trainTimePlan.ArrivalTime.HasValue) Console.WriteLine("Ankomst: " + trainTimePlan.ArrivalTime);
+                if (trainTimePlan.DepartureTime.HasValue)   Console.WriteLine("Avgång: " + trainTimePlan.DepartureTime);
+               
+                Console.WriteLine();
+            }
 
             return this;
         }
@@ -186,17 +184,25 @@ namespace TrainConsole
         {
             // loadPlan laddar StartStation - Slutstation respektive start & sluttid samt Tågnamn + Id
 
+
+            var trainstations = Trainstation.PopulateList();
+            int endStationId = this.Timeplan[Timeplan.Count - 1].StationId;
+            string endStationName = ReturnNameFromId(endStationId, trainstations);
+
             const int aDayInMinutes = 1440;
             //TimeSpan openingTime = new TimeSpan(5, 30, 0).TotalMinutes;
             int openHours = (int)new TimeSpan(5, 30, 0).TotalMinutes;
 
+            string train = Train.TrainName;
 
-            string train = (this.Train as Train).TrainName;
-
-            string station1 = this.StartStation.StationName;
-            string station2 = this.EndStation.StationName;
+            string station1 = this.Trainstation.StationName;
+            string station2 = endStationName;
 
 
+            Timetable stationOne = new Timetable();
+            Timetable stationTwo = new Timetable();
+            stationOne = Timeplan[0];
+            stationTwo = Timeplan[1];
 
             for (int min = openHours; min < aDayInMinutes; min++)
             {
@@ -205,16 +211,18 @@ namespace TrainConsole
 
                 if (IsInWholeHour) Console.WriteLine("Kl:" + hour + ":00");
 
-                if (min == this.DepartureTime.TotalMinutes)
-                {
-                    Console.WriteLine("Kl:" + this.DepartureTime.ToString() + ":00");
-                    Console.WriteLine($"{train} kör från {station1} till {station2}");
-                }
-                if (min == this.ArrivalTime.TotalMinutes)
-                {
-                    Console.WriteLine("Kl:" + this.ArrivalTime.ToString() + ":00");
-                    Console.WriteLine($"{train} anlände till {station2} till {station1}");
-                }
+
+                //if (min == stationOne.DepartureTime.TotalMinutes)
+                //{
+                //    Console.WriteLine("Kl:" + stationOne.DepartureTime.ToString() + ":00");
+                //    Console.WriteLine($"{train} kör från {station1} till {station2}");
+                //}
+                //if (min == stationTwo.ArrivalTime.TotalMinutes)
+                //{
+                //    Console.WriteLine("Kl:" + stationTwo.ToString() + ":00");
+                //    Console.WriteLine($"{train} anlände till {station2} till {station1}");
+                //}
+                Thread.Sleep(1000);
             }
             Console.ReadKey();
             return this;
