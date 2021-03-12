@@ -60,7 +60,9 @@ namespace TrainConsole
             string jsonString = JsonSerializer.Serialize(this, options);
 
             Console.WriteLine("Sparar...");
-            File.WriteAllText(path, jsonString);
+
+            string fullPath = @$"{path}-{Train.TrainId}-{Train.TrainName}-{DateTime.Now.ToString("dd/MM/yyyy")}.json";
+            File.WriteAllText(fullPath, jsonString);
         }
 
         public ITravelPlan HeadTowards(Station station2)
