@@ -168,7 +168,7 @@ namespace TrainConsole
 
             Console.WriteLine("============================================================");
 
-            Func<DateTime?, string> DateToDisplayShort = d => d.Value.ToString("t").PadLeft(10);
+         
 
             foreach (var trainTimePlan in Timeplan)
             {
@@ -213,6 +213,12 @@ namespace TrainConsole
             stationOne = Timeplan[0];
             stationTwo = Timeplan[1];
 
+            //DateTime minutos = stationOne.DepartureTime.Value;
+            //DateTime dygn = new DateTime(24, 0, 0);
+
+            //////Func<DateTime, DateTime, TimeSpan> GetTotalMinutes = (DateTime time, DateTime day) => day - time;
+            //double inMinutes = GetTotalMinutes(minutos, dygn).TotalMinutes;
+            
             for (int min = openHours; min < aDayInMinutes; min++)
             {
                 bool IsInWholeHour = min % 60 == 0;
@@ -220,21 +226,23 @@ namespace TrainConsole
 
                 if (IsInWholeHour) Console.WriteLine("Kl:" + hour + ":00");
 
+                if (min == GetTotalMinutes(stationOne.DepartureTime))
+                {
+                    Console.WriteLine("Kl:" + DateToDisplayShort(stationOne.DepartureTime) + ":00");
+                    Console.WriteLine($"{train} kör från {station1} till {station2}");
+                }
+                if (min == GetTotalMinutes(stationTwo.ArrivalTime))
+                {
+                    Console.WriteLine("Kl:" + DateToDisplayShort(stationTwo.ArrivalTime) + ":00");
+                    Console.WriteLine($"{train} anlände till {station2} till {station1}");
+                }
 
-                //if (min == stationOne.DepartureTime.TotalMinutes)
-                //{
-                //    Console.WriteLine("Kl:" + stationOne.DepartureTime.ToString() + ":00");
-                //    Console.WriteLine($"{train} kör från {station1} till {station2}");
-                //}
-                //if (min == stationTwo.ArrivalTime.TotalMinutes)
-                //{
-                //    Console.WriteLine("Kl:" + stationTwo.ToString() + ":00");
-                //    Console.WriteLine($"{train} anlände till {station2} till {station1}");
-                //}
-                Thread.Sleep(1000);
             }
             Console.ReadKey();
             return this;
         }
+
+        Func<DateTime?, int> GetTotalMinutes = x => (x.Value.Hour * 60) + x.Value.Minute;
+        Func<DateTime?, string> DateToDisplayShort = d => d.Value.ToString("t").PadLeft(10);
     }
 }
