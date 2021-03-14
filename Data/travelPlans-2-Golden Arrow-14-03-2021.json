@@ -1,0 +1,34 @@
+{
+  "Timeplan": [
+    {
+      "Id": 2,
+      "StationId": 1,
+      "DepartureTime": "2021-03-14T10:20:00",
+      "ArrivalTime": null
+    },
+    {
+      "Id": 2,
+      "StationId": 2,
+      "DepartureTime": "2021-03-14T10:45:00",
+      "ArrivalTime": "2021-03-14T10:43:00"
+    },
+    {
+      "Id": 2,
+      "StationId": 3,
+      "DepartureTime": null,
+      "ArrivalTime": "2021-03-14T10:59:00"
+    }
+  ],
+  "Train": {
+    "TrainId": 2,
+    "TrainName": "Golden Arrow",
+    "MaxSpeed": 120,
+    "IsOperated": true
+  },
+  "Trainstation": {
+    "Id": 1,
+    "StationName": "Stonecro",
+    "EndStation": true,
+    "ListOfStations": null
+  }
+}

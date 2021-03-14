@@ -76,7 +76,7 @@ namespace TrainConsole
             {
                 if (train.DepartureTime == null)
                 {
-                    train.DepartureTime = TimeSpan.Parse(time.ToString());
+                    train.DepartureTime = DateTime.Parse(time.ToString());
                     break;
                 }
             }
@@ -110,7 +110,7 @@ namespace TrainConsole
 
                 middlestation.Id = this.Train.TrainId;
                 middlestation.StationId = station.Id;
-                middlestation.ArrivalTime = TimeSpan.Parse(time.ToString());
+                middlestation.ArrivalTime = DateTime.Parse(time.ToString());
                 Timeplan.Insert(endstationIndex, middlestation);
 
             }
@@ -121,12 +121,12 @@ namespace TrainConsole
 
                 if (station.EndStation == true && location.DepartureTime == null) // Är det inte startstationen och 
                 {
-                    location.ArrivalTime = TimeSpan.Parse(time.ToString());
+                    location.ArrivalTime = DateTime.Parse(time.ToString());
                     break;
                 }
                 else if (station.Id != startStation.Id && location.ArrivalTime == null) // Får kika senare m den ska ta bort
                 {
-                    location.ArrivalTime = TimeSpan.Parse(time.ToString());
+                    location.ArrivalTime = DateTime.Parse(time.ToString());
                     break;
                 }
             }
@@ -167,13 +167,22 @@ namespace TrainConsole
             }
 
             Console.WriteLine("============================================================");
+
+            Func<DateTime?, string> DateToDisplayShort = d => d.Value.ToString("t").PadLeft(10);
+
             foreach (var trainTimePlan in Timeplan)
             {
                 string station = ReturnNameFromId(trainTimePlan.StationId, trainstations);
 
+
                 Console.WriteLine(station);
-                if (trainTimePlan.ArrivalTime.HasValue) Console.WriteLine("Ankomst: " + trainTimePlan.ArrivalTime);
-                if (trainTimePlan.DepartureTime.HasValue)   Console.WriteLine("Avgång: " + trainTimePlan.DepartureTime);
+                if (trainTimePlan.ArrivalTime.HasValue) 
+                    Console.WriteLine("Ankomst: ".PadRight(10) + 
+                        DateToDisplayShort(trainTimePlan.ArrivalTime));
+                
+                if (trainTimePlan.DepartureTime.HasValue)  
+                    Console.WriteLine("Avgång: ".PadRight(10) + 
+                        DateToDisplayShort(trainTimePlan.DepartureTime));
                
                 Console.WriteLine();
             }

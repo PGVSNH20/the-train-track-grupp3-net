@@ -10,13 +10,13 @@ namespace TrainEngine.Models
     {
         public int Id { get; set; }
         public int StationId { get; set; }
-        public TimeSpan? DepartureTime { get; set; }
-        public TimeSpan? ArrivalTime { get; set; }
+        public DateTime? DepartureTime { get; set; }
+        public DateTime? ArrivalTime { get; set; }
         public Timetable()
         {
 
         }
-        public Timetable(int id, int stationId, TimeSpan departureTimne, TimeSpan arrivalTime)
+        public Timetable(int id, int stationId, DateTime departureTimne, DateTime arrivalTime)
         {
             Id = id;
             StationId = stationId;
@@ -50,8 +50,8 @@ namespace TrainEngine.Models
 
             var id = int.Parse(dataCol[0]);
             var stationId = int.Parse(dataCol[1]);
-            var departureTime = TimeSpan.Parse(dataCol[2]);
-            var arrivalTime = TimeSpan.Parse(dataCol[3]);
+            var departureTime = DateTime.Parse(dataCol[2]);
+            var arrivalTime = DateTime.Parse(dataCol[3]);
 
             return new Timetable(id, stationId, departureTime, arrivalTime);
         }
