@@ -43,7 +43,7 @@ namespace TrainEngine.Reader
             List<string> stationsList = new List<string>();
             int holdRail = 0;
             List<int> rails = new List<int>();
-
+            List<Passages> passagesList = new List<Passages>();
             try
             {
                 // Startar stream, letar rätt på fil
@@ -60,7 +60,14 @@ namespace TrainEngine.Reader
                             index++;
                             if (c == '[') { if (holdRail != 0) { rails.Add(holdRail); holdRail = 0; } stationsList.Add(line[index].ToString()); }
                             if (c == '-') { holdRail++; }
-                            //if (c == '=') { passing++; }
+                            if (c == '=') 
+                            { 
+                                Passages myPass = new Passages(); // Den går inte att assigna.. inte när jag provade tuple innan heller . Hjälp ?
+                                myPass.Station = 1; 
+                                myPass.RailsFromStation = holdRail; 
+                                passagesList.Add(myPass);  
+                                Console.WriteLine(myPass.RailsFromStation); 
+                            }
 
                         }
                     }
@@ -68,6 +75,7 @@ namespace TrainEngine.Reader
                 TrackDescription myTrackDesc = new TrackDescription();
                 myTrackDesc.Stations = stationsList;
                 myTrackDesc.Rails = rails;
+                myTrackDesc.MyPassages = passagesList;
                 return myTrackDesc;
             }
             catch (Exception e)
