@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainEngine.Reader;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TrainConsole
 {
     public class Train
     {
+
         public int TrainId { get; set; }
 
         public string TrainName { get; set; }
@@ -63,6 +66,23 @@ namespace TrainConsole
 
             return new Train(trainId, trainName, maxSpeed, isOperated);
         }
+
+        public Train GetTrainByIdThroughList(int? id, List<Train> list)
+        {
+            foreach (var train in list)
+            {
+                if (id.Equals(train.TrainId)) return train;
+            }
+            return null;
+
+        }
+        //public Func<int, List<Train>, Train> GetTrainByIdThroughList = (id, list) =>
+        //    id.Equals(list.ForEach(x => id == x.TrainId))
+
+
+
+
+
     }
 }
 

@@ -42,59 +42,23 @@ namespace TrainConsole
             Station grandRetro = new Station("Grand Retro");
 
 
-            //2|Mount Juanceo|false
-            //3 | Grand Retro | true
-            
-            ITravelPlan travelPlan = new TrainPlaner(goldenArrow, stonecro)
-                .HeadTowards(grandRetro)
-                .StartTrainAt("10:20")
-                .StopTrainAt(mountJuanceo, "10:43")
-                .StartTrainAt("10:45")
-                .StopTrainAt(grandRetro, "10:59")
+            //ITravelPlan travelPlan = new TrainPlaner(goldenArrow, stonecro)
+            //    .HeadTowards(grandRetro)
+            //    .StartTrainAt("10:20")
+            //    .StopTrainAt(mountJuanceo, "10:43")
+            //    .StartTrainAt("10:45")
+            //    .StopTrainAt(grandRetro, "10:59")
+            //    .GeneratePlan();
 
-                .GeneratePlan();
-            
-            travelPlan.Save(_defaultSavePath);
+            ITravelPlan travelPlan = new TrainPlaner();
 
-            //travelPlan.Save("Sjumilaskogen");
+            //travelPlan.Save(_defaultSavePath);
+            travelPlan.Load(_defaultSavePath + "travelPlans-2-Golden Arrow-15-03-2021.json");
+
+            travelPlan.GeneratePlan();
             travelPlan.Simulate();
 
-            //FileReader p = new FileReader();
-            //var result = p.StreamReader(trainUrl);
 
-            // Testar att skriva ut stationer
-            Console.WriteLine();
-            var station = new Station();
-            var stationResult = station.PopulateList();
-            foreach (var stationTest in stationResult)
-            {
-                Console.WriteLine(stationTest.StationName);
-            }
-
-            // Testar att skriva ut tåg
-            Console.WriteLine();
-            var train = new Train();
-            var trainResult = train.PopulateList();
-
-            foreach (var trainTest in trainResult)
-            {
-                Console.WriteLine(trainTest.TrainName);
-            }
-
-            // Testar att skriva ut passagerare
-            Console.WriteLine();
-            var passenger = new Passenger();
-            var passengerResult = passenger.PopulateList();
-
-            foreach (var passengerTest in passengerResult)
-            {
-                Console.WriteLine(passengerTest.Name);
-            }
-
-            //FileReader p = new FileReader();
-            //p.StreamReader();
-            //Station myInstance = new Station();
-            //myInstance.ListOfStations.ForEach(x => Console.WriteLine(x.StationName));
         }
     }
 }

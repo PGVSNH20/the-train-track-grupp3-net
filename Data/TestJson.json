@@ -18,16 +18,5 @@
       "DepartureTime": null,
       "ArrivalTime": "2021-03-15T10:59:00"
     }
-  ],
-  "Train": {
-    "TrainId": 2,
-    "TrainName": "Golden Arrow",
-    "MaxSpeed": 120,
-    "IsOperated": true
-  },
-  "Trainstation": {
-    "Id": 1,
-    "StationName": "Stonecro",
-    "EndStation": true
-  }
+  ]
 }

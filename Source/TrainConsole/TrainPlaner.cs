@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using TrainEngine;
 using TrainEngine.Models;
 
 namespace TrainConsole
 {
-    class TrainPlaner : ITravelPlan
+    public class TrainPlaner : ITravelPlan
     {
         public List<Timetable> Timeplan { get; set; } = new List<Timetable>();
 
         public Train Train { get; set; }
 
         public Station Trainstation { get; set; } = new Station();
+
+        public TrainPlaner()
+        {
+
+        }
+        public TrainPlaner(List<Timetable> timeplan, Train train, Station station)
+        {
+            Train = train;
+            Trainstation = station;
+            Timeplan = timeplan;
+        }
 
         public TrainPlaner(Train train, Station station)
         {
@@ -28,13 +35,34 @@ namespace TrainConsole
             Timetable startstation = new Timetable();
             startstation.Id = train.TrainId;
             startstation.StationId = station.Id;
-            
+
             Timeplan.Add(startstation);
         }
 
+
         public void Load(string path)
         {
-            throw new NotImplementedException();
+            // Jsonfilen innehåller: List<Timetable>, train, station
+            // https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0 försöäker med den här, deserialize delen.
+
+            Console.WriteLine($"Loading from {path}...");
+            var jsonString = File.ReadAllText(path);
+
+            Object loadLoadTimeplanFromFile;
+
+            loadLoadTimeplanFromFile = JsonSerializer.Deserialize<TrainPlaner>(jsonString);
+
+            TrainPlaner trainPlaner = new TrainPlaner(null, null, null);
+
+            trainPlaner = loadLoadTimeplanFromFile as TrainPlaner;
+
+            this.Timeplan = trainPlaner.Timeplan;
+            this.Train = trainPlaner.Train;
+            this.Trainstation = trainPlaner.Trainstation;
+            
+            Console.WriteLine("Load complete...");
+
+          
         }
 
         public void Save(string path)
@@ -47,10 +75,19 @@ namespace TrainConsole
             string jsonString = JsonSerializer.Serialize(this, options);
 
             Console.WriteLine("Sparar...");
-
-            string fullPath = @$"{path}travelPlans-{Train.TrainId}-{Train.TrainName}-{DateTime.Now.ToString("dd/MM/yyyy")}.json";
-            File.WriteAllText(fullPath, jsonString);
+            if (this == null)//
+            {
+                Console.WriteLine("Object in wich to serialize is empty");
+                Console.ReadKey();
+                return;
+            }
+            else
+            {   // Verkar balla ur när man sparar en tom fill trots övre if kontrollen
+                string fullPath = @$"{path}travelPlans-{Train.TrainId}-{Train.TrainName}-{DateTime.Now.ToString("dd/MM/yyyy")}.json";
+                File.WriteAllText(fullPath, jsonString);
+            }
         }
+          
 
         public ITravelPlan HeadTowards(Station station2)
         {
@@ -87,20 +124,6 @@ namespace TrainConsole
         {
             Station startStation = this.Trainstation;
 
-
-            /*
-             61
-
-            List<int> initializers = new List <int>();
-
-            initializers.Add(1);
-            initializers.Add(3);
-
-            int index = initializers.IndexOf(3);
-            initializers.Insert(index, 2);
-             
-             */
-           
             if (station.EndStation == false)
             {
                 Timetable middlestation = new Timetable();
@@ -134,7 +157,7 @@ namespace TrainConsole
             return this;
 
         }
-        private string ReturnNameFromId(int stationId, List<Station> stations)
+        private string ReturnNameFromId(int? stationId, List<Station> stations)
         {
             foreach (var station in stations)
             {
@@ -143,32 +166,32 @@ namespace TrainConsole
                     return station.StationName;
                 }
             }
-            return "Station not found";  
-   
+            return "Station not found";
+
         }
 
 
         public ITravelPlan GeneratePlan()
         {
-            var trainstations = Trainstation.PopulateList();
+            var trainstations = Trainstation.PopulatedListFromFile();
 
             int endStationId = this.Timeplan[Timeplan.Count - 1].StationId;
             string endStationName = ReturnNameFromId(endStationId, trainstations);
 
 
-            Console.WriteLine(Trainstation.StationName + " - " + endStationName );
+            Console.WriteLine(Trainstation.StationName + " - " + endStationName);
             Console.WriteLine(Train.TrainName);
             Console.WriteLine($"[{Train.TrainId}]".PadLeft(Train.TrainName.Length));
             Console.WriteLine("--------------------------------------------------");
 
             foreach (var row in Timeplan)
             {
-                Console.WriteLine(row.Id + " " + ReturnNameFromId(row.StationId, trainstations) + " " +  row.DepartureTime + " " +  row.ArrivalTime);
+                Console.WriteLine(row.Id + " " + ReturnNameFromId(row.StationId, trainstations) + " " + row.DepartureTime + " " + row.ArrivalTime);
             }
 
             Console.WriteLine("============================================================");
 
-         
+
 
             foreach (var trainTimePlan in Timeplan)
             {
@@ -176,36 +199,42 @@ namespace TrainConsole
 
 
                 Console.WriteLine(station);
-                if (trainTimePlan.ArrivalTime.HasValue) 
-                    Console.WriteLine("Ankomst: ".PadRight(10) + 
+                if (trainTimePlan.ArrivalTime.HasValue)
+                    Console.WriteLine("Ankomst: ".PadRight(10) +
                         DateToDisplayShort(trainTimePlan.ArrivalTime));
-                
-                if (trainTimePlan.DepartureTime.HasValue)  
-                    Console.WriteLine("Avgång: ".PadRight(10) + 
+
+                if (trainTimePlan.DepartureTime.HasValue)
+                    Console.WriteLine("Avgång: ".PadRight(10) +
                         DateToDisplayShort(trainTimePlan.DepartureTime));
-               
+
                 Console.WriteLine();
             }
 
             return this;
         }
+
         public ITravelPlan Simulate()
         {
             // loadPlan laddar StartStation - Slutstation respektive start & sluttid samt Tågnamn + Id
 
 
-            var trainstations = Trainstation.PopulateList();
-            int endStationId = this.Timeplan[Timeplan.Count - 1].StationId;
-            string endStationName = ReturnNameFromId(endStationId, trainstations);
+            var trainstations = Trainstation.PopulatedListFromFile();
 
-            const int aDayInMinutes = 1440;
-            //TimeSpan openingTime = new TimeSpan(5, 30, 0).TotalMinutes;
+            if (this.Timeplan.Count > 0)
+            {
+                int endStationId = this.Timeplan[Timeplan.Count - 1].StationId;
+                string endStationName = ReturnNameFromId(endStationId, trainstations);
+            }
+            else Console.WriteLine("fel fel fel!");
+
+
+            int aDayInMinutes = (int)new TimeSpan(24, 0, 0).TotalMinutes;
             int openHours = (int)new TimeSpan(5, 30, 0).TotalMinutes;
 
             string train = Train.TrainName;
 
             string station1 = this.Trainstation.StationName;
-            string station2 = endStationName;
+            string station2 = "slutstation";
 
 
             Timetable stationOne = new Timetable();
@@ -213,12 +242,6 @@ namespace TrainConsole
             stationOne = Timeplan[0];
             stationTwo = Timeplan[1];
 
-            //DateTime minutos = stationOne.DepartureTime.Value;
-            //DateTime dygn = new DateTime(24, 0, 0);
-
-            //////Func<DateTime, DateTime, TimeSpan> GetTotalMinutes = (DateTime time, DateTime day) => day - time;
-            //double inMinutes = GetTotalMinutes(minutos, dygn).TotalMinutes;
-            
             for (int min = openHours; min < aDayInMinutes; min++)
             {
                 bool IsInWholeHour = min % 60 == 0;

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using TrainEngine.Reader;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TrainEngine.Models
 {
+
     public class Station
     {
         public Station()
@@ -17,7 +20,7 @@ namespace TrainEngine.Models
 
             //PopulateList().ForEach(s => station = (s.StationName == name) ? s : null);
 
-            foreach (var station in PopulateList())
+            foreach (var station in PopulatedListFromFile())
             {
                 if (name == station.StationName)
                 {
@@ -35,13 +38,15 @@ namespace TrainEngine.Models
         static readonly string _stations = @"..\..\..\..\..\Data\stations.txt";
 
         // Id|StationName|EndStation
+        
+
         public int Id { get; set; }
+
         public string StationName { get; set; }
+
         public bool EndStation { get; set; }
 
-        public List<Station> ListOfStations { get; set; }
-
-        public List<Station> PopulateList()
+        public List<Station> PopulatedListFromFile()
         {
             FileReader p = new FileReader();
             List<string> result = p.StreamReader(_stations);
