@@ -36,12 +36,13 @@ namespace TrainEngine.Reader
             }
         }
 
-        public List<string> ReadTrackDesc(string url)
+        public TrackDescription ReadTrackDesc(string url)
         {
             string[] numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
 
             List<string> stationsList = new List<string>();
-            int rail1 = 0;
+            int holdRail = 0;
+            List<int> rails = new List<int>();
 
             try
             {
@@ -57,14 +58,17 @@ namespace TrainEngine.Reader
                         foreach (var c in line)
                         {
                             index++;
-                            if (c == '[')
-                            {
-                                stationsList.Add(line[index + 1].ToString());
-                            }
+                            if (c == '[') { if (holdRail != 0) { rails.Add(holdRail); holdRail = 0; } stationsList.Add(line[index + 1].ToString()); }
+                            if (c == '-') { holdRail++; }
+                            //if (c == '=') { passing++; }
+
                         }
                     }
                 }
-                return new List<string>();
+                TrackDescription myTrackDesc = new TrackDescription();
+                myTrackDesc.Stations = stationsList;
+                myTrackDesc.Rails = rails;
+                return myTrackDesc;
             }
             catch (Exception e)
             {
