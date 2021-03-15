@@ -16,6 +16,8 @@ namespace TrainConsole
             // Step 1:
             // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
             // Parse the trains (Data/trains.txt)
+            TrackOrm track = new TrackOrm();
+            track.ParseTrackDescription(@"..\..\..\..\..\Data\traintrack1.txt");
 
             // Step 2:
             // Make the trains run in treads
