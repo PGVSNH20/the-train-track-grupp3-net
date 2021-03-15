@@ -58,7 +58,7 @@ namespace TrainEngine.Reader
                         foreach (var c in line)
                         {
                             index++;
-                            if (c == '[') { if (holdRail != 0) { rails.Add(holdRail); holdRail = 0; } stationsList.Add(line[index + 1].ToString()); }
+                            if (c == '[') { if (holdRail != 0) { rails.Add(holdRail); holdRail = 0; } stationsList.Add(line[index].ToString()); }
                             if (c == '-') { holdRail++; }
                             //if (c == '=') { passing++; }
 
@@ -74,7 +74,7 @@ namespace TrainEngine.Reader
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
-                return new List<string>();
+                return null;
             }
         }
     }

@@ -11,7 +11,7 @@ namespace TrainEngine
 
             var parsedData = myReader.ReadTrackDesc(trackUrl);
 
-            return new TrackDescription();
+            return parsedData;
         }
     }
 }

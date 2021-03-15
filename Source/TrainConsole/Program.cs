@@ -17,7 +17,10 @@ namespace TrainConsole
             // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
             // Parse the trains (Data/trains.txt)
             TrackOrm track = new TrackOrm();
-            track.ParseTrackDescription(@"..\..\..\..\..\Data\traintrack1.txt");
+            var result = track.ParseTrackDescription(@"..\..\..\..\..\Data\traintrack1.txt");
+            result.Stations.ForEach(x => Console.WriteLine($"Station: {x}"));
+            Console.WriteLine("Amount of rail between stations:");
+            foreach(var rail in result.Rails) { Console.WriteLine(rail); }
 
             // Step 2:
             // Make the trains run in treads
