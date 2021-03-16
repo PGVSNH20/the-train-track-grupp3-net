@@ -62,11 +62,11 @@ namespace TrainEngine.Reader
                             if (c == '-') { holdRail++; }
                             if (c == '=') 
                             { 
-                                Passages myPass = new Passages(); // Den går inte att assigna.. inte när jag provade tuple innan heller . Hjälp ?
-                                myPass.Station = 1; 
+                                Passages myPass = new Passages();
+                                myPass.Station = Convert.ToInt32(stationsList.Last()); 
                                 myPass.RailsFromStation = holdRail; 
                                 passagesList.Add(myPass);  
-                                Console.WriteLine(myPass.RailsFromStation); 
+                                Console.WriteLine(myPass.RailsFromStation + " rails from station: " + myPass.Station); 
                             }
 
                         }
