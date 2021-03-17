@@ -12,6 +12,19 @@ namespace TrainEngine.Tests
         static readonly string _defaultSavePath = @"..\..\..\..\..\Data\";
 
         [Fact]
+        public void When_ProvidedTrainTrackFile_Expect_TheResultToContainStationIds()
+        {
+            // Arrange
+            TrackOrm trackOrm = new TrackOrm();            
+            
+            // Act
+            var result = trackOrm.ParseTrackDescription(_defaultSavePath + "traintrack2.txt");            
+            
+            //Assert
+            Assert.NotEmpty(result.Stations);
+        }
+
+        [Fact]
         public void When_OnlyAStationIsProvided_Expect_TheResultOnlyToContainAStationWithId1()
         {
             // Arrange
