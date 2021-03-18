@@ -12,15 +12,15 @@ namespace TrainConsole
         static readonly string _defaultSavePath = @"..\..\..\..\..\Data\";
         static void Main(string[] args)
         {
-            Console.WriteLine("Train track!");
-            // Step 1:
-            // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
-            // Parse the trains (Data/trains.txt)
-            TrackOrm track = new TrackOrm();
-            var result = track.ParseTrackDescription(@"..\..\..\..\..\Data\traintrack2.txt");
-            result.Stations.ForEach(x => Console.WriteLine($"Station: {x}"));
-            Console.WriteLine("Amount of rail between stations:");
-            foreach(var rail in result.Rails) { Console.WriteLine(rail); }
+            //Console.WriteLine("Train track!");
+            //// Step 1:
+            //// Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
+            //// Parse the trains (Data/trains.txt)
+            //TrackOrm track = new TrackOrm();
+            //var result = track.ParseTrackDescription(@"..\..\..\..\..\Data\traintrack2.txt");
+            //result.Stations.ForEach(x => Console.WriteLine($"Station: {x}"));
+            //Console.WriteLine("Amount of rail between stations:");
+            //foreach (var rail in result.Rails) { Console.WriteLine(rail); }
 
             // Step 2:
             // Make the trains run in treads
@@ -60,9 +60,16 @@ namespace TrainConsole
             //travelPlan.Save(_defaultSavePath);
             travelPlan.Load(_defaultSavePath + "travelPlans-2-Golden Arrow-15-03-2021.json");
 
-            travelPlan.GeneratePlan();
-            travelPlan.Simulate();
+            //travelPlan.GeneratePlan();
+            //travelPlan.Simulate();
 
+            Console.WriteLine();
+            TrainRunner track = new TrainRunner(travelPlan);
+            track.Start(travelPlan.Timeplan[0], travelPlan.Timeplan[1]);
+            track.Start(travelPlan.Timeplan[1], travelPlan.Timeplan[2]);
+
+            IClock fakeClock = new FakeClock();
+            fakeClock.Start();
 
         }
     }

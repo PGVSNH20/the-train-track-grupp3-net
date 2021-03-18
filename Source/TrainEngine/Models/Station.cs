@@ -10,6 +10,7 @@ namespace TrainEngine.Models
 
     public class Station
     {
+
         public Station()
         {
          
@@ -45,7 +46,7 @@ namespace TrainEngine.Models
         public string StationName { get; set; }
 
         public bool EndStation { get; set; }
-
+        public object Console { get; internal set; }
         public List<Station> PopulatedListFromFile()
         {
             FileReader p = new FileReader();
@@ -79,6 +80,27 @@ namespace TrainEngine.Models
                 EndStation = bool.Parse(dataCol[2])
             };
 
+        }
+
+        public static List<Station> GetStationsFromFile()
+        {
+            FileReader p = new FileReader();
+            List<string> result = p.StreamReader(_stations);
+
+            List<Station> stationList = new List<Station>();
+
+            bool hasSkippedFirstRow = false;
+            foreach (var row in result)
+            {
+                if (hasSkippedFirstRow == false)
+                {
+                    hasSkippedFirstRow = true;
+                    continue;
+                }
+                stationList.Add(GetStationData(row));
+            }
+
+            return stationList;
         }
     }
 }

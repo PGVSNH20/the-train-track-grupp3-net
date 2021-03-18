@@ -170,6 +170,19 @@ namespace TrainConsole
 
         }
 
+        public static Station ReturnStationFromId(int? stationId)
+        {
+            foreach (var station in Station.GetStationsFromFile())
+            {
+                if (stationId.Equals(station.Id))
+                {
+                    return station;
+                }
+            }
+            return null;
+
+        }
+
 
         public ITravelPlan GeneratePlan()
         {
