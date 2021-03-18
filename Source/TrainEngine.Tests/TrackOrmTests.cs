@@ -25,6 +25,19 @@ namespace TrainEngine.Tests
         }
 
         [Fact]
+        public void When_PassageProvided_CheckExist()
+        {
+            // Arrange
+            TrackOrm trackOrm = new TrackOrm();
+
+            // Act
+            var result = trackOrm.ParseTrackDescription(_defaultSavePath + "traintrack2.txt");
+
+            // Assert
+            Assert.NotEmpty(result.MyPassages);
+        }
+
+        [Fact]
         public void When_OnlyAStationIsProvided_Expect_TheResultOnlyToContainAStationWithId1()
         {
             // Arrange
